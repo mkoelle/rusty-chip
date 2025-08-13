@@ -1,0 +1,22 @@
+// .devcontainer/devcontainer.json
+{
+  "name": "ESP32 Rust Dev",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "remoteUser": "root",
+  "workspaceFolder": "/workspace",
+  "extensions": [
+    "rust-lang.rust-analyzer",
+    "ms-vscode.cpptools",
+    "ms-vscode.cmake-tools"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "mounts": [
+    "source=/dev/ttyUSB0,target=/dev/ttyUSB0,type=bind"
+  ],
+  "runArgs": ["--privileged"]
+}

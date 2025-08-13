@@ -1,0 +1,19 @@
+# Cargo.toml
+[package]
+name = "esp32-rust-dev"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+esp-idf-sys = { version = "0.33", features = ["binstart"] }
+esp-idf-hal = "0.33"
+embedded-hal = "0.2"
+
+[dev-dependencies]
+embedded-hal-mock = "0.11"
+
+[profile.release]
+# Optimize for size
+opt-level = "z"
+lto = true
+codegen-units = 1
