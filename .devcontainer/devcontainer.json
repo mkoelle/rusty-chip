@@ -10,10 +10,18 @@
       "ESP_BOARD": "esp32"
     }
   },
-  // https://github.com/serialport/serialport-rs/issues/153
+  // Device access configuration
+  // For Linux hosts (uncomment these and comment out the Windows configuration below)
+  // "runArgs": [
+  //   "--mount",
+  //   "type=bind,source=/run/udev,target=/run/udev,readonly"
+  // ],
+
+  // For Windows/WSL2 hosts (comment these out when using Linux)
   "runArgs": [
-    "--mount",
-    "type=bind,source=/run/udev,target=/run/udev,readonly"
+    "--device=/dev/ttyUSB0",
+    "--device=/dev/ttyACM0",
+    "--privileged"
   ],
   "customizations": {
     "vscode": {
@@ -48,6 +56,6 @@
     3333,
     8000
   ],
-  "workspaceMount": "source=${localWorkspaceFolder},target=/home/esp/rusty_chip,type=bind,consistency=cached",
-  "workspaceFolder": "/home/esp/rusty_chip"
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
+  "workspaceFolder": "/workspace"
 }

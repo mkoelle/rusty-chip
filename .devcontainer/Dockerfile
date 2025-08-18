@@ -56,11 +56,18 @@ RUN if [ -n "${GITHUB_TOKEN}" ]; then export GITHUB_TOKEN=${GITHUB_TOKEN}; fi  \
     --log-level debug \
     --export-file /home/${CONTAINER_USER}/export-esp.sh
 
+# Install ESP-IDF
+# Note: The version is hardcoded to v5.3.3 for consistency with the espup installation.
+RUN cd $HOME && git clone -b v5.3.3 --recursive https://github.com/espressif/esp-idf.git \
+    && cd esp-idf && ./install.sh
+
 # Set default toolchain
 RUN rustup default esp
 
 
 # Activate ESP environment
 RUN echo "source /home/${CONTAINER_USER}/export-esp.sh" >> ~/.bashrc
+RUN echo "source $HOME/esp-idf/export.sh" >> ~/.bashrc
+ENV IDF_PATH=/home/esp/esp-idf
 
 CMD [ "/bin/bash" ]
