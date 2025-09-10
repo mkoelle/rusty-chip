@@ -2,10 +2,12 @@
 
 ## Setup
 
+### MAC
+
 1. Run [rustup](https://rustup.rs/) \
    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Install [espup](https://github.com/esp-rs/espup) globally (a tool for installing and maintaining the required toolchains for Espressif) \
-   `cargo install espup --locked`
+   `cargo install espup`
 1. Install toolchains \
    `espup install` \
    `espup install --targets=esp32,esp32s2,esp32s3` - add the esp tooling to your profile \
@@ -45,3 +47,7 @@ cargo install cargo-outdated
 ## troubleshooting
 
 ### cant find crate for 'core'
+
+git init --initial-branch=main
+git remote add work git@git.nmlv.nml.com:KOE7194/rusty-chip.git
+git push --set-upstream work main
