@@ -7,11 +7,17 @@
 1. Run [rustup](https://rustup.rs/) \
    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Install [espup](https://github.com/esp-rs/espup) globally (a tool for installing and maintaining the required toolchains for Espressif) \
+   `. "$HOME/.cargo/env"`
+   `find and delete the rust-toolchain.toml file`
    `cargo install espup`
 1. Install toolchains \
    `espup install` \
    `espup install --targets=esp32,esp32s2,esp32s3` - add the esp tooling to your profile \
     `. $HOME/export-esp.sh`
+1. If using brew
+   `brew install certifi`
+   `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
+   `cargo install ldproxy`
 
 ---
 
