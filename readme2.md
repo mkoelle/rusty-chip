@@ -47,7 +47,3 @@ cargo install cargo-outdated
 ## troubleshooting
 
 ### cant find crate for 'core'
-
-git init --initial-branch=main
-git remote add work git@git.nmlv.nml.com:KOE7194/rusty-chip.git
-git push --set-upstream work main
