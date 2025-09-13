@@ -53,3 +53,7 @@ cargo install cargo-outdated
 ## troubleshooting
 
 ### cant find crate for 'core'
+
+https://pfesenmeier.github.io/wsl2-and-embedded-development/
+https://www.instructables.com/ESP32-ESP32C3-Blink-Test-Rust-Development-in-Windo/
+https://developer.mamezou-tech.com/en/blogs/2025/05/19/using-rust-02/
