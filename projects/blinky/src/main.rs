@@ -19,7 +19,7 @@ fn main() {
     let peripherals = Peripherals::take().unwrap();
     let pins = peripherals.pins;
 
-    let mut led = PinDriver::output(pins.gpio2).unwrap();
+    let mut led = PinDriver::output(pins.gpio33).unwrap();
 
     loop {
         if led.is_set_low() {
