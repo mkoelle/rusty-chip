@@ -49,8 +49,6 @@ jobs:
           ldproxy: true
       - name: Enable caching
         uses: Swatinem/rust-cache@v2
-      - name: Change to project directory
-        working-directory: ${{ matrix.manifest }}
-        run: pwd
       - name: Run command
+        working-directory: ${{ matrix.manifest }}
         run: cargo ${{ matrix.action.command }} ${{ matrix.action.args }}
