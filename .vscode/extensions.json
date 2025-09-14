@@ -1,5 +1,7 @@
 {
     "recommendations": [
-        "wokwi.wokwi-vscode"
+        "wokwi.wokwi-vscode",
+        "rust-lang.rust-analyzer",
+        "tamasfe.even-better-toml"
     ]
 }

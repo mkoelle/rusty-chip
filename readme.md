@@ -18,16 +18,16 @@ The instructions below are as close to complete as was recalled.
 1. Run [rustup](https://rustup.rs/) \
    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Install [espup](https://github.com/esp-rs/espup) globally (a tool for installing and maintaining the required toolchains for Espressif) \
-   `. "$HOME/.cargo/env"`
-   `find and delete the rust-toolchain.toml file`
+   `. "$HOME/.cargo/env"` \
    `cargo install espup`
 1. Install toolchains \
    `espup install` \
-   `espup install --targets=esp32,esp32s2,esp32s3` - add the esp tooling to your profile \
+   `espup install --targets=esp32,esp32s2,esp32s3`
+   - add the esp tooling to your profile \
     `. $HOME/export-esp.sh`
-1. If using brew
-   `brew install certifi`
-   `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
+1. If behind a prosy, use brew to install certifi and pre-download the espidf constraints
+   `brew install certifi` \
+   `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt` \
    `cargo install ldproxy`
 
 ---
@@ -36,8 +36,7 @@ The instructions below are as close to complete as was recalled.
 `export CARGO_TARGET_DIR=target` \
 `cargo +esp build --target xtensa-esp32-espidf`
 
-
-
+```sh
 python3 -m pip install --upgrade certifi
 
 mkdir -p .embuild/espressif
@@ -50,6 +49,46 @@ cargo install espflash
 cargo install cargo-espflash
 
 cargo build --target xtensa-esp32-espidf
+```
+
+Additional Guides for getting started with ESP and Rust on MAC
+
+- [Espressif guide to getting started with linux and macos setup](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html)
+
+### Windows
+
+For windows you will need to setup WSL instead of working on the repo directly.
+Rust does not yet play nice with [windows half support](https://learn.microsoft.com/en-us/windows/win32/fileio/maximum-file-path-limitation?tabs=registry) for [long path names](https://github.com/rust-lang/cargo/issues/9770).
+It is recommended to use ubuntu for the wsl distro.
+
+1) install linux build tools
+   - `sudo apt update` \
+      `sudo apt install -y libssl-dev pkg-config curl build-essential gcc libudev-dev python3-venv`
+1) install rust
+   - `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+   - ` . "$HOME/.cargo/env"` sourcing the cargo env should be automatic after restarting your session. 
+1) install [espup](https://github.com/esp-rs/espup)
+   - `cargo install espup --locked`
+1) install esp targets from espup
+   - `espup install --targets esp32`
+1) install remaining esp tooling
+   - `cargo install espflash` \
+      `cargo install ldproxy` \
+      `cargo install cargo-generate` \
+      `cargo install cargo-espflash`
+
+To build projects first source the esp exports, then build.
+
+```sh
+. $HOME/export-esp.sh
+cargo build
+```
+
+Additional Guides for getting started with ESP and Rust in WSL on windows
+
+- https://pfesenmeier.github.io/wsl2-and-embedded-development/
+- https://www.instructables.com/ESP32-ESP32C3-Blink-Test-Rust-Development-in-Windo/
+- https://developer.mamezou-tech.com/en/blogs/2025/05/19/using-rust-02/
 
 ## Extra rust tools
 
@@ -63,13 +102,3 @@ cargo install cargo-outdated
 
 - https://docs.esp-rs.org/std-training
 - https://jamesmcm.github.io/blog/beginner-rust-esp32-lcdsnake/
-
-Guides for getting started with ESP and Rust in WSL on windows
-
-- https://pfesenmeier.github.io/wsl2-and-embedded-development/
-- https://www.instructables.com/ESP32-ESP32C3-Blink-Test-Rust-Development-in-Windo/
-- https://developer.mamezou-tech.com/en/blogs/2025/05/19/using-rust-02/
-
-Guides for getting started with ESP and Rust on MAC
-
-- https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/linux-macos-setup.html
