@@ -62,6 +62,7 @@ cargo install cargo-outdated
 ## References
 
 - https://docs.esp-rs.org/std-training
+- https://jamesmcm.github.io/blog/beginner-rust-esp32-lcdsnake/
 
 Guides for getting started with ESP and Rust in WSL on windows
 
