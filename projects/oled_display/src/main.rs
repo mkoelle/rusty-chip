@@ -3,8 +3,8 @@ use std::thread;
 use std::time::Duration;
 
 use esp_idf_hal::{
+    gpio::PinDriver,
     i2c::{I2cConfig, I2cDriver},
-    gpio::{ PinDriver},
     peripherals::Peripherals,
     prelude::*,
 };
@@ -35,7 +35,7 @@ fn main() {
     let scl = pins.gpio22;
 
     let mut led = PinDriver::output(pins.gpio33).unwrap();
-
+    let mut led_two = PinDriver::output(pins.gpio2).unwrap();
 
     let config = I2cConfig::new().baudrate(400u32.kHz().into());
     let i2c_driver = I2cDriver::new(i2c, sda, scl, &config)
@@ -43,7 +43,7 @@ fn main() {
         .unwrap();
 
     let interface = I2CDisplayInterface::new(i2c_driver);
-    let mut display = Ssd1306::new(interface, DisplaySize128x64, DisplayRotation::Rotate0)
+    let mut display = Ssd1306::new(interface, DisplaySize128x32, DisplayRotation::Rotate0)
         .into_buffered_graphics_mode();
 
     display
@@ -56,7 +56,7 @@ fn main() {
         .unwrap();
 
     let style = MonoTextStyle::new(&FONT_6X10, BinaryColor::On);
-    Text::new("Hello World !!!", Point::new(10, 32), style)
+    Text::new("Hello World !!!", Point::new(10, 0), style)
         .draw(&mut display)
         .map_err(|e| anyhow!("Draw error: {:?}", e))
         .unwrap();
@@ -69,14 +69,15 @@ fn main() {
     let mut count = 0;
     loop {
         let _ = led.toggle();
+        let _ = led_two.toggle();
 
         let _ = display.clear(BinaryColor::Off);
-        Text::new("Hello World !!!", Point::new(10, 32), style)
+        Text::new("Hello World !!!", Point::new(10, 12), style)
             .draw(&mut display)
             .map_err(|e| anyhow!("Draw error: {:?}", e))
             .unwrap();
 
-        Text::new(&count.to_string(), Point::new(10, 42), style)
+        Text::new(&count.to_string(), Point::new(10, 22), style)
             .draw(&mut display)
             .map_err(|e| anyhow!("Draw error: {:?}", e))
             .unwrap();
