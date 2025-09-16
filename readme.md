@@ -13,6 +13,19 @@ Creating a diagram can be done at [wokwi.com/projects/new/esp32](https://wokwi.c
 
 Github actions and vscode folders are included for quality checks and quality of life help.
 
+## Development
+
+```sh
+# build the project
+cargo build
+```
+
+### Flashing the hardware
+
+```sh
+cargo espflash flash --target xtensa-esp32-espidf --monitor
+```
+
 ## Setup
 
 Getting the first build to work when new to rust and the esp32 is tricky.
@@ -23,38 +36,33 @@ The instructions below are as close to complete as was recalled.
 1. Run [rustup](https://rustup.rs/) \
    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Install [espup](https://github.com/esp-rs/espup) globally (a tool for installing and maintaining the required toolchains for Espressif) \
-   `. "$HOME/.cargo/env"`
-   `find and delete the rust-toolchain.toml file`
+   `. "$HOME/.cargo/env"` \
    `cargo install espup`
 1. Install toolchains \
    `espup install` \
-   `espup install --targets=esp32,esp32s2,esp32s3` - add the esp tooling to your profile \
-    `. $HOME/export-esp.sh`
-1. If using brew
-   `brew install certifi`
-   `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
+   `espup install --targets=esp32,esp32s2,esp32s3`
+   - add the esp tooling to your profile \
+     `. $HOME/export-esp.sh`
+1. If behind a proxy
+   - install certifi \
+     `brew install certifi`
+   - Per project acquire espidf.constraints \
+      `cd project/foo` \
+      `mkdir -p .embuild/espressif` \
+      `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
+1. Install ldproxy \
    `cargo install ldproxy`
 
 ---
 
+_Steps that may or may not be needed_
+
 `rustup +esp target add xtensa-esp32-espidf` \
-`export CARGO_TARGET_DIR=target` \
-`cargo +esp build --target xtensa-esp32-espidf`
-
-
-
-python3 -m pip install --upgrade certifi
-
-mkdir -p .embuild/espressif
-
-curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt
+`export CARGO_TARGET_DIR=target`
 
 cargo install cargo-generate
-cargo install espup
 cargo install espflash
 cargo install cargo-espflash
-
-cargo build --target xtensa-esp32-espidf
 
 ## Extra rust tools
 
