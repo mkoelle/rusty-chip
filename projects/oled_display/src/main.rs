@@ -66,8 +66,26 @@ fn main() {
         .map_err(|e| anyhow!("Final flush error: {:?}", e))
         .unwrap();
 
+    let mut count = 0;
     loop {
         let _ = led.toggle();
+
+        let _ = display.clear(BinaryColor::Off);
+        Text::new("Hello World !!!", Point::new(10, 32), style)
+            .draw(&mut display)
+            .map_err(|e| anyhow!("Draw error: {:?}", e))
+            .unwrap();
+
+        Text::new(&count.to_string(), Point::new(10, 42), style)
+            .draw(&mut display)
+            .map_err(|e| anyhow!("Draw error: {:?}", e))
+            .unwrap();
+        count += 1;
+        display
+            .flush()
+            .map_err(|e| anyhow!("Final flush error: {:?}", e))
+            .unwrap();
+
         // thread::sleep to make sure the watchdog won't trigger
         thread::sleep(Duration::from_millis(500));
     }
