@@ -6,6 +6,11 @@ A collection of ESP32 projects written in rust for Robot and IoT club.
 
 Individual solutions are kept under the projects folder.
 
+Where possible boards are simulated with wokwi.
+These are the `diagram.json` and `wokwi.toml` files found in each of the projects
+A free license is sufficient for running and creating pinouts.
+Creating a diagram can be done at [wokwi.com/projects/new/esp32](https://wokwi.com/projects/new/esp32), then copied into the project folder.
+
 Github actions and vscode folders are included for quality checks and quality of life help.
 
 ## Setup
