@@ -88,6 +88,6 @@ fn main() {
             .unwrap();
 
         // thread::sleep to make sure the watchdog won't trigger
-        thread::sleep(Duration::from_millis(500));
+        thread::sleep(Duration::from_millis(10));
     }
 }

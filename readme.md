@@ -37,12 +37,13 @@ The instructions below are as close to complete as was recalled.
    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Install [espup](https://github.com/esp-rs/espup) globally (a tool for installing and maintaining the required toolchains for Espressif) \
    `. "$HOME/.cargo/env"` \
-   `cargo install espup`
+   `cargo install espup --locked`
 1. Install toolchains \
-   `espup install` \
-   `espup install --targets=esp32,esp32s2,esp32s3`
+   `espup install`
    - add the esp tooling to your profile \
      `. $HOME/export-esp.sh`
+1. Install ldproxy \
+   `cargo install ldproxy`
 1. If behind a proxy
    - install certifi \
      `brew install certifi`
@@ -50,19 +51,6 @@ The instructions below are as close to complete as was recalled.
       `cd project/foo` \
       `mkdir -p .embuild/espressif` \
       `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
-1. Install ldproxy \
-   `cargo install ldproxy`
-
----
-
-_Steps that may or may not be needed_
-
-`rustup +esp target add xtensa-esp32-espidf` \
-`export CARGO_TARGET_DIR=target`
-
-cargo install cargo-generate
-cargo install espflash
-cargo install cargo-espflash
 
 ## Extra rust tools
 
