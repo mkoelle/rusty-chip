@@ -30,5 +30,3 @@ esp-idf-hal = "0.45.2"
 
 [build-dependencies]
 embuild = "0.33"
-[env]
-CRATE_CC_NO_DEFAULTS=1

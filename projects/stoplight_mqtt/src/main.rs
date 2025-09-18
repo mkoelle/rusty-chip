@@ -14,20 +14,47 @@ fn main() {
     // Bind the log crate to the ESP Logging facilities
     esp_idf_svc::log::EspLogger::initialize_default();
 
-    log::info!("Hello, world!");
-
     let peripherals = Peripherals::take().unwrap();
     let pins = peripherals.pins;
 
-    let mut led = PinDriver::output(pins.gpio33).unwrap();
+    let mut red_light = PinDriver::output(pins.gpio25).unwrap();
+    let mut green_light = PinDriver::output(pins.gpio33).unwrap();
+    let mut yellow_light = PinDriver::output(pins.gpio32).unwrap();
 
     loop {
-        if led.is_set_low() {
-            led.set_level(Level::High).expect("Failed to set LED high");
-            log::info!("LED is ON");
+        if red_light.is_set_high() {
+            red_light
+                .set_level(Level::Low)
+                .expect("Failed to set RED low");
+            yellow_light
+                .set_level(Level::Low)
+                .expect("Failed to set YELLOW low");
+            green_light
+                .set_level(Level::High)
+                .expect("Failed to set GREEN high");
+            log::info!("Green Light!");
+        } else if green_light.is_set_high() {
+            red_light
+                .set_level(Level::Low)
+                .expect("Failed to set RED low");
+            yellow_light
+                .set_level(Level::High)
+                .expect("Failed to set YELLOW high");
+            green_light
+                .set_level(Level::Low)
+                .expect("Failed to set GREEN high");
+            log::info!("Yellow Light!");
         } else {
-            led.set_level(Level::Low).expect("Failed to set LED low");
-            log::info!("LED is OFF");
+            red_light
+                .set_level(Level::High)
+                .expect("Failed to set RED high");
+            yellow_light
+                .set_level(Level::Low)
+                .expect("Failed to set YELLOW low");
+            green_light
+                .set_level(Level::Low)
+                .expect("Failed to set GREEN low");
+            log::info!("Red Light!");
         }
 
         // thread::sleep to make sure the watchdog won't trigger
