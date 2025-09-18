@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "editor": "wokwi",
+  "author": "mkoelle",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 20,
+      "left": 40,
+      "attrs": {
+        "flashSize": "16"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led",
+      "top": 20,
+      "left": 0,
+      "attrs": {
+        "color": "red"
+      }
+    }
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+    ["esp:33", "led:A", "red", []],
+    ["esp:GND.1", "led:C", "black", []]
+  ],
+  "serialMonitor": {
+    "display": "terminal",
+    "convertEol": true
+  }
+}
