@@ -6,7 +6,25 @@ A collection of ESP32 projects written in rust for Robot and IoT club.
 
 Individual solutions are kept under the projects folder.
 
+Where possible boards are simulated with wokwi.
+These are the `diagram.json` and `wokwi.toml` files found in each of the projects
+A free license is sufficient for running and creating pinouts.
+Creating a diagram can be done at [wokwi.com/projects/new/esp32](https://wokwi.com/projects/new/esp32), then copied into the project folder.
+
 Github actions and vscode folders are included for quality checks and quality of life help.
+
+## Development
+
+```sh
+# build the project
+cargo build
+```
+
+### Flashing the hardware
+
+```sh
+cargo espflash flash --target xtensa-esp32-espidf --monitor
+```
 
 ## Setup
 
@@ -18,38 +36,21 @@ The instructions below are as close to complete as was recalled.
 1. Run [rustup](https://rustup.rs/) \
    `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Install [espup](https://github.com/esp-rs/espup) globally (a tool for installing and maintaining the required toolchains for Espressif) \
-   `. "$HOME/.cargo/env"`
-   `find and delete the rust-toolchain.toml file`
-   `cargo install espup`
+   `. "$HOME/.cargo/env"` \
+   `cargo install espup --locked`
 1. Install toolchains \
-   `espup install` \
-   `espup install --targets=esp32,esp32s2,esp32s3` - add the esp tooling to your profile \
-    `. $HOME/export-esp.sh`
-1. If using brew
-   `brew install certifi`
-   `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
+   `espup install`
+   - add the esp tooling to your profile \
+     `. $HOME/export-esp.sh`
+1. Install ldproxy \
    `cargo install ldproxy`
-
----
-
-`rustup +esp target add xtensa-esp32-espidf` \
-`export CARGO_TARGET_DIR=target` \
-`cargo +esp build --target xtensa-esp32-espidf`
-
-
-
-python3 -m pip install --upgrade certifi
-
-mkdir -p .embuild/espressif
-
-curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt
-
-cargo install cargo-generate
-cargo install espup
-cargo install espflash
-cargo install cargo-espflash
-
-cargo build --target xtensa-esp32-espidf
+1. If behind a proxy
+   - install certifi \
+     `brew install certifi`
+   - Per project acquire espidf.constraints \
+      `cd project/foo` \
+      `mkdir -p .embuild/espressif` \
+      `curl -k -o .embuild/espressif/espidf.constraints.v5.3.txt https://dl.espressif.com/dl/esp-idf/espidf.constraints.v5.3.txt`
 
 ## Extra rust tools
 
