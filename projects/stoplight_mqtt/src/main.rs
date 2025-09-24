@@ -2,7 +2,7 @@ use std::thread;
 use std::time::Duration;
 
 use esp_idf_hal::{
-    gpio::{Level, PinDriver},
+    gpio::{Level, PinDriver, Pull},
     peripherals::Peripherals,
 };
 
@@ -21,8 +21,28 @@ fn main() {
     let mut green_light = PinDriver::output(pins.gpio33).unwrap();
     let mut yellow_light = PinDriver::output(pins.gpio32).unwrap();
 
+    let mut button_pin = PinDriver::input(pins.gpio5).unwrap();
+    button_pin.set_pull(Pull::Up).unwrap();
+
+    let mut is_pressed = false;
+    let mut frames = 0;
+    let frame_length = 50;
+
     loop {
-        if red_light.is_set_high() {
+        if button_pin.is_low() && !is_pressed {
+            log::info!("Button Pressed!");
+            is_pressed = true;
+        } else if button_pin.is_high() && is_pressed {
+            log::info!("Button Released!");
+            is_pressed = false;
+        }
+
+        frames += 1;
+        if frames >= frame_length {
+            frames = 0;
+        }
+
+        if red_light.is_set_high() && frames == 0 {
             red_light
                 .set_level(Level::Low)
                 .expect("Failed to set RED low");
@@ -32,8 +52,8 @@ fn main() {
             green_light
                 .set_level(Level::High)
                 .expect("Failed to set GREEN high");
-            log::info!("Green Light!");
-        } else if green_light.is_set_high() {
+            // log::info!("Green Light!");
+        } else if green_light.is_set_high() && frames == 0 {
             red_light
                 .set_level(Level::Low)
                 .expect("Failed to set RED low");
@@ -43,8 +63,8 @@ fn main() {
             green_light
                 .set_level(Level::Low)
                 .expect("Failed to set GREEN high");
-            log::info!("Yellow Light!");
-        } else {
+            // log::info!("Yellow Light!");
+        } else if frames == 0 {
             red_light
                 .set_level(Level::High)
                 .expect("Failed to set RED high");
@@ -54,10 +74,10 @@ fn main() {
             green_light
                 .set_level(Level::Low)
                 .expect("Failed to set GREEN low");
-            log::info!("Red Light!");
+            // log::info!("Red Light!");
         }
 
         // thread::sleep to make sure the watchdog won't trigger
-        thread::sleep(Duration::from_millis(500));
+        thread::sleep(Duration::from_millis(10));
     }
 }
