@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "author": "Mark Koelle",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-breadboard-half",
+      "id": "bb1",
+      "top": -185.4,
+      "left": -256.4,
+      "attrs": {}
+    },
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 48,
+      "left": -148.76,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -99.6,
+      "left": -236.2,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -99.6,
+      "left": -217,
+      "attrs": { "color": "yellow" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led3",
+      "top": -99.6,
+      "left": -197.8,
+      "attrs": { "color": "limegreen" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -105.5,
+      "left": -51.3,
+      "rotate": 270,
+      "attrs": { "color": "grey", "xray": "1", "bounce": "1" }
+    }
+  ],
+  "connections": [
+    ["esp:TX", "$serialMonitor:RX", "", []],
+    ["esp:RX", "$serialMonitor:TX", "", []],
+    ["esp:GND.2", "bb1:bn.25", "black", ["h96", "v-65.9"]],
+    ["bb1:bn.1", "bb1:2b.j", "black", ["v0"]],
+    ["bb1:bn.3", "bb1:4b.j", "black", ["v0"]],
+    ["bb1:bn.5", "bb1:6b.j", "black", ["v0"]],
+    ["esp:32", "bb1:5b.j", "gold", ["h0"]],
+    ["esp:33", "bb1:7b.j", "green", ["h0"]],
+    ["esp:25", "bb1:3b.j", "orange", ["h-67.05", "v-182.4"]],
+    ["esp:5", "bb1:22b.j", "gray", ["h0"]],
+    ["led1:A", "bb1:3b.g", "", ["$bb"]],
+    ["led1:C", "bb1:2b.g", "", ["$bb"]],
+    ["led2:A", "bb1:5b.g", "", ["$bb"]],
+    ["led2:C", "bb1:4b.g", "", ["$bb"]],
+    ["led3:A", "bb1:7b.g", "", ["$bb"]],
+    ["led3:C", "bb1:6b.g", "", ["$bb"]],
+    ["btn1:1.l", "bb1:22b.h", "", ["$bb"]],
+    ["btn1:2.l", "bb1:24b.h", "", ["$bb"]],
+    ["btn1:1.r", "bb1:22t.c", "", ["$bb"]],
+    ["btn1:2.r", "bb1:24t.c", "", ["$bb"]],
+    ["bb1:24b.j", "bb1:bn.20", "green", ["v0"]]
+  ],
+  "dependencies": {}
+}
